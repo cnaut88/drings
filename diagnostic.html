@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пошук товарів</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .search-container {
+            margin: 20px;
+            position: relative;
+        }
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            display: none;
+        }
+        .search-results div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .search-results div:hover {
+            background-color: #f1f1f1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 20;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        .modal button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Пошук товару..." onkeyup="searchProducts()">
+    <div class="search-results" id="search-results"></div>
+</div>
+
+<!-- Модальне вікно -->
+<div id="modal" class="modal">
+    <div id="modal-content">
+        <!-- Інформація про товар буде тут -->
+    </div>
+    <button onclick="closeModal()">Закрити</button>
+</div>
+
+<div id="modal-overlay" class="modal-overlay" style="display: none;" onclick="closeModal()"></div>
+
+<script>
+    const products = [
+        { id: 1, name: "Піца Маргарита", description: "Смачна піца з помідорами та моцарелою." },
+        { id: 2, name: "Ролл з лососем", description: "Ролл з свіжим лососем та авокадо." },
+        { id: 3, name: "Кава латте", description: "Класичний латте з молоком та кавою." },
+        { id: 4, name: "Чай зеленый", description: "Зеленый чай з лимоном." }
+    ];
+
+    function searchProducts() {
+        const query = document.getElementById("search-input").value.toLowerCase();
+        const results = document.getElementById("search-results");
+        results.innerHTML = '';
+        
+        if (query === '') {
+            results.style.display = 'none';
+            return;
+        }
+
+        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
+
+        if (filteredProducts.length === 0) {
+            results.style.display = 'none';
+            return;
+        }
+
+        filteredProducts.forEach(product => {
+            const div = document.createElement('div');
+            div.textContent = product.name;
+            div.onclick = function() {
+                openModal(product);
+            };
+            results.appendChild(div);
+        });
+
+        results.style.display = 'block';
+    }
+
+    function openModal(product) {
+        const modal = document.getElementById("modal");
+        const modalContent = document.getElementById("modal-content");
+        const overlay = document.getElementById("modal-overlay");
+
+        modalContent.innerHTML = `
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+        `;
+        
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("modal");
+        const overlay = document.getElementById("modal-overlay");
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
+
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,447 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Меню з тумблером</title>
+  <style>
+    /* Загальні стилі для меню */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Кнопка меню */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, rgb(230, 118, 5), #FF4500);
+    background-size: 300% 300%;
+    animation: gradientBG 2s infinite alternate linear; /* Анімація для переливу */
+    transition: background 0.1s, color 0.1s;
+}
+:root {
+    --bg-light: hsl(0, 100%, 48%);
+    --bg-dark: hsl(246, 88.60%, 13.70%);
+    --shadow-light: rgba(248, 0, 0, 0.57);
+    --shadow-dark: rgba(255, 255, 255, 0.2);
+}
+@keyframes gradientBG {
+    0% { background-position: left top; }
+    100% { background-position: right bottom; }
+}
+
+header {
+    padding: 15px;
+    text-align: center;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.menu button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    font-weight: bold;
+    color: rgb(241, 241, 241);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    background-color: transparent;
+}
+
+.menu-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.menu-button .bar {
+    display: block;
+    width: 30px;
+    height: 4px;
+    margin: 5px 0;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 999;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #555;
+}
+
+#sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+    z-index: 998;
+}
+
+#overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    margin-left: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+
+/* Затемнення */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+    z-index: 999;
+}
+
+/* Покажемо меню та затемнення при відкритті */
+#sidebar.open {
+    left: 0;
+}
+
+#overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка -->
+  <button class="menu-button" onclick="toggleSidebar()" aria-label="Меню">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <!-- Затемнення -->
+  <div id="overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Меню -->
+  <div id="sidebar">
+    <ul>
+      <li>
+        <span>Змінити тему</span>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider"></span>
+        </label>
+      </li>
+      <li><a href="#">Про нас</a></li>
+      <li><a href="#">Контакти</a></li>
+    </ul>
+  </div>
+
+  <script>
+    
+    function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+}
+
+  </script>
+<!-- Підключення стилів футера -->
+<link rel="stylesheet" href="footer.css">
+
+<!-- Футер -->
+<footer class="footer">
+  <div class="footer-container">
+    
+    <!-- Секція підписки -->
+    <div class="footer-subscribe">
+      <h2>СПРАГЛИЙ ДО БІЛЬШОГО?</h2>
+      <p>Отримуй новини, рецепти та поради прямо на пошту!</p>
+      <form>
+        <input type="email" placeholder="Ваш Email">
+        <button type="submit">Підписатися</button>
+      </form>
+      <div class="social-icons">
+        <a href="https://instagram.com" target="_blank">
+          <img src="Instagram.png" alt="Instagram" class="social-icon">
+        </a>
+        <a href="https://Youtube.com/" target="_blank">
+          <img src="Youtube.png" alt="Youtube" class="social-icon">
+        </a>
+        <a href="https://facebook.com" target="_blank">
+          <img src="Facebook.png" alt="Facebook" class="social-icon">
+        </a>
+        <a href="https://pinterest.com" target="_blank">
+          <img src="pinterest.png" alt="Pinterest" class="social-icon">
+        </a>
+      </div>
+      
+    </div>
+
+    <!-- Секція посилань -->
+    <div class="footer-links">
+      <div>
+        <h3>МАГАЗИН</h3>
+        <ul>
+          <li><a href="#">Купити зараз</a></li>
+          <li><a href="#">Продукти</a></li>
+          <li><a href="#">Напої</a></li>
+          <li><a href="#">Порційні шоти</a></li>
+          <li><a href="#">Добавки</a></li>
+          <li><a href="#">Розчинні мікси</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>ПРО НАС</h3>
+        <ul>
+          <li><a href="#">Чому ми</a></li>
+          <li><a href="#">Про компанію</a></li>
+          <li><a href="#">Блог</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>ПІДТРИМКА</h3>
+        <ul>
+          <li><a href="#">Контакти</a></li>
+          <li><a href="#">Де купити</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Доступність</a></li>
+          <li><a href="#">CA Supply Chains Act</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Низ футера -->
+  <div class="footer-bottom">
+    <p>&copy; 2025 Усі права захищено | <a href="#">Політика конфіденційності</a> | <a href="#">Умови використання</a> | <a href="#">Повернення</a> | <a href="#">Контакти</a></p>
+  </div>
+</footer>
+<style>/* Основний футер */
+    /* Основний футер */
+.footer {
+  background-color: #008000;
+  color: white;
+  padding: 40px 20px;
+  font-family: sans-serif;
+}
+
+/* Контейнер */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px; /* Відступ між subscribe і links */
+}
+
+/* Секція підписки */
+.footer-subscribe {
+  flex: 1 1 250px;
+}
+
+.footer-subscribe h2 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.footer-subscribe p {
+  margin-top: 10px;
+}
+
+.footer-subscribe form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.footer-subscribe input[type="email"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  flex: 1;
+}
+
+.footer-subscribe button {
+  background-color: purple;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Соцмережі */
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-icons a {
+  display: inline-block;
+  outline: none;
+}
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px; /* якщо хочеш кругліші — став 50% */
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.social-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Забираємо блакитний фокус */
+.social-icons a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+/* Посилання */
+.footer-links {
+  display: flex;
+  gap: 40px; /* Відступ між колонками в links */
+  flex: 2 1 400px;
+  flex-wrap: wrap;
+}
+
+.footer-links > div {
+  min-width: 150px;
+  margin-bottom: 20px; /* Відступ знизу, якщо на малих екранах буде перенос */
+}
+
+.footer-links h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 5px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Низ футера */
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+.footer-bottom a {
+  color: white;
+  text-decoration: none;
+  margin: 0 5px;
+}
+</style>
+</body>
+</html>
+

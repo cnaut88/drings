@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pepsi та Sprite Колекція</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="menu-button" onclick="toggleSidebar()" aria-label="Меню">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+    
+    <!-- Затемнення -->
+    <div id="overlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Меню -->
+    <div id="sidebar">
+        <ul>
+          <li>
+            <span>Змінити тему</span>
+            <label class="switch">
+              <input type="checkbox" id="theme-toggle">
+              <span class="slider"></span>
+            </label>
+          </li>
+          <li><a href="#">Про нас</a></li>
+          <li><a href="#">Контакти</a></li>
+        </ul>
+    </div>
+
+    <header>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Пошук товару..." onkeyup="searchProducts()">
+        <div class="search-results" id="search-results"></div>
+    </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Колекція Pepsi та Sprite</h1>
+            <p>Скуштуйте різноманітні смаки від Pepsi та Sprite! Це справжня класика!</p>
+        </div>
+        <div class="carousel">
+            <img src="pngwing.com (1).png" alt="Pepsi" onclick="openModal('pngwing.com (1).png', 'Pepsi', 'Насолоджуйтеся класичним смаком Pepsi!')">
+            <img src="pngwing.com (2).png" alt="Sprite" onclick="openModal('pngwing.com (2).png', 'Sprite', 'Освіжаючий смак Sprite, що дарує бадьорість!')">
+            <img src="pngwing.com (4).png" alt="Pepsi Lime" onclick="openModal('pngwing.com (4).png', 'Pepsi Lime', 'Pepsi з нотками лайма для свіжості!')">
+            <img src="pngwing.com (8).png" alt="Sprite Mint" onclick="openModal('pngwing.com (8).png', 'Sprite Mint', 'Sprite з мятною ноткою!')">
+            <img src="pngwing.com (9).png" alt="Pepsi Cherry" onclick="openModal('pngwing.com (9).png', 'Pepsi Cherry', 'Pepsi з вишневим смаком!')">
+            <img src="pngwing.com (7).png" alt="Sprite Ice" onclick="openModal('pngwing.com (7).png', 'Sprite Ice', 'Sprite з крижаною свіжістю!')">
+            <img src="pngwing.com (5).png" alt="Pepsi Max" onclick="openModal('pngwing.com (5).png', 'Pepsi Max', 'Pepsi без цукру, але з максимальним смаком!')">
+            <img src="pngwing.com (6).png" alt="Sprite Zero" onclick="openModal('pngwing.com (6).png', 'Sprite Zero', 'Sprite без цукру, освіжає без компромісів!')">
+        </div>
+
+        <div class="carousel-controls">
+            <button class="prev-button">Назад</button>
+            <button class="next-button">Вперед</button>
+        </div>
+    </main>
+
+    <!-- Модальне вікно -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modal-img" src="" alt="Pepsi">
+            <div class="modal-text">
+                <h2 id="modal-title"></h2>
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper(".swiper", {
+            slidesPerView: 3,
+            centeredSlides: true,
+            spaceBetween: 10,
+            loop: true,
+            simulateTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+
+        function openModal(image, title, description) {
+            document.getElementById("modal-img").src = image;
+            document.getElementById("modal-title").textContent = title;
+            document.getElementById("modal-description").textContent = description;
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        const toggleButton = document.getElementById("theme-toggle");
+        const body = document.body;
+
+        if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark-theme");
+            toggleButton.checked = true; 
+        }
+
+        toggleButton.addEventListener("change", () => {
+            body.classList.toggle("dark-theme");
+            localStorage.setItem("theme", body.classList.contains("dark-theme") ? "dark" : "light");
+        });
+
+        const carousel = document.querySelector('.carousel');
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+
+        prevButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: -130, behavior: 'smooth' });
+        });
+
+        nextButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: 130, behavior: 'smooth' });
+        });
+    </script>
+    <footer class="footer">
+        <div class="footer-container">
+          
+          <!-- Секція підписки -->
+          <div class="footer-subscribe">
+            <h2>МАЄШ ЩО СКАЗАТИ?</h2>
+            <p>Залиш свій коментар — поділись думками, враженнями чи порадами!</p>
+            <form action="https://formspree.io/f/mgvagjzk" method="POST">
+              <label>
+                  <input type="email" placeholder="Твоя адреса" name="email" required>
+              </label>
+              <label>
+                  <textarea name="message" placeholder="Коментар" required></textarea>
+              </label>
+              <button type="submit">Відправити</button>
+          </form>
+            <div class="social-icons">
+              <a href="https://instagram.com" target="_blank">
+                <img src="Instagram.png" alt="Instagram" class="social-icon">
+              </a>
+              <a href="https://Youtube.com/" target="_blank">
+                <img src="Youtube.png" alt="Youtube" class="social-icon">
+              </a>
+              <a href="https://facebook.com" target="_blank">
+                <img src="Facebook.png" alt="Facebook" class="social-icon">
+              </a>
+              <a href="https://pinterest.com" target="_blank">
+                <img src="pinterest.png" alt="Pinterest" class="social-icon">
+              </a>
+            </div>
+            
+          </div>
+      
+          <!-- Секція посилань -->
+          <div class="footer-links">
+            <div>
+              <h3>МАГАЗИН</h3>
+              <ul>
+                <li><a href="#">Купити зараз</a></li>
+                <li><a href="#">Продукти</a></li>
+                <li><a href="#">Напої</a></li>
+                <li><a href="#">Порційні шоти</a></li>
+                <li><a href="#">Добавки</a></li>
+                <li><a href="#">Розчинні мікси</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3>ПРО НАС</h3>
+              <ul>
+                <li><a href="#">Чому ми</a></li>
+                <li><a href="#">Про компанію</a></li>
+                <li><a href="#">Блог</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3>ПІДТРИМКА</h3>
+              <ul>
+                <li><a href="#">Контакти</a></li>
+                <li><a href="#">Де купити</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Доступність</a></li>
+                <li><a href="#">CA Supply Chains Act</a></li>
+              </ul>
+            </div>
+          </div>
+      
+        </div>
+      
+        <!-- Низ футера -->
+        <div class="footer-bottom">
+          <p>&copy; 2025 Усі права захищено | <a href="#">Політика конфіденційності</a> | <a href="#">Умови використання</a> | <a href="#">Повернення</a> | <a href="#">Контакти</a></p>
+        </div>
+      </footer>
+</body>
+</html>
+
+
+
+
